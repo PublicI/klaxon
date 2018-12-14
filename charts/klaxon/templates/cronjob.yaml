@@ -1,0 +1,27 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: {{ template "fullname" . }}-checker
+  labels:
+    draft: {{ default "draft-app" .Values.draft }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+spec:
+  schedule: "*/5 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            buildID: {{ .Values.buildID }}
+          labels:
+            draft: {{ default "draft-app" .Values.draft }}
+            app: {{ template "fullname" . }}
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - name: {{ template "fullname" . }}-checker
+            image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+            command:
+              - rake check:all
+            resources:
+{{ toYaml .Values.resources | indent 16 }}
