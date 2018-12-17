@@ -22,6 +22,36 @@ spec:
           - name: {{ template "fullname" . }}-checker
             image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
             command:
-              - rake check:all
+              - bundle exec rake check:all
+            env:
+            - name: "ADMIN_EMAILS"
+              valueFrom:
+                secretKeyRef:
+                  key:  admin_emails
+                  name: {{ .Release.Name }}-auth
+            - name: "DATABASE_URL"
+              valueFrom:
+                secretKeyRef:
+                  key:  database_url
+                  name: {{ .Release.Name }}-auth
+            - name: "SECRET_KEY_BASE"
+              valueFrom:
+                secretKeyRef:
+                  key:  secret_key_base
+                  name: {{ .Release.Name }}-auth
+            - name: "SES_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  key:  ses_password
+                  name: {{ .Release.Name }}-auth
+            - name: "SES_USERNAME"
+              valueFrom:
+                secretKeyRef:
+                  key:  ses_username
+                  name: {{ .Release.Name }}-auth
+          {{- range $key, $value := .Values.env }}
+            - name: "{{ $key }}"
+              value: "{{ $value }}"
+          {{- end }}
             resources:
 {{ toYaml .Values.resources | indent 16 }}

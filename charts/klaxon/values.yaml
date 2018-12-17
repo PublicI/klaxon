@@ -18,3 +18,12 @@ resources:
     memory: 128Mi
 ingress:
   enabled: false
+env:
+  MAILER_FROM_ADDRESS: alerts@publicintegrity.org
+  PORT: 3000
+  RACK_ENV: production
+  RAILS_ENV: production
+  SES_ADDRESS: email-smtp.us-east-1.amazonaws.com
+  SES_DOMAIN: publicintegrity.org
+  SES_PORT: 2587
+  SMTP_PROVIDER: SES
