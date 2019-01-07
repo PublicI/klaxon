@@ -5,7 +5,7 @@ replicaCount: 1
 image:
   repository: publicintegrity/klaxon
   tag: latest
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 service:
   name: klaxon
   type: ClusterIP
