@@ -6,6 +6,7 @@ pipeline:
     repo: publicintegrity/klaxon
     tags: latest
     secrets: [ database_url ]
+    build_args_from_env: [ DATABASE_URL ]
     when:
       branch: publici
 

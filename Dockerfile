@@ -12,6 +12,8 @@ RUN bundle install
 
 COPY . /usr/src/app
 
+ARG DATABASE_URL
+
 RUN RACK_ENV=production RAILS_ENV=production bundle exec rake assets:precompile assets:clean
 
 EXPOSE 3000
