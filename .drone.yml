@@ -5,6 +5,7 @@ pipeline:
     secrets: [ docker_username, docker_password ]
     repo: publicintegrity/klaxon
     tags: latest
+    secrets: [ database_url ]
     when:
       branch: publici
 

@@ -12,5 +12,7 @@ RUN bundle install
 
 COPY . /usr/src/app
 
+RUN bundle exec rake assets:precompile assets:clean
+
 EXPOSE 3000
 CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
