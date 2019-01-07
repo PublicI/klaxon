@@ -21,8 +21,7 @@ spec:
           containers:
           - name: {{ template "fullname" . }}-checker
             image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-            command:
-              - bundle exec rake check:all
+            command: ["bundle","exec","rake","check:all"]
             env:
             - name: "ADMIN_EMAILS"
               valueFrom:

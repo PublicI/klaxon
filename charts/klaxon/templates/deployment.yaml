@@ -18,8 +18,7 @@ spec:
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-        command:
-          - bundle exec puma -C /usr/src/app/config/puma.rb
+        command: ["bundle","exec","puma","-C","config/puma.rb"]
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         ports:
         - containerPort: {{ .Values.service.internalPort }}

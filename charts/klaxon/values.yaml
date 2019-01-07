@@ -3,9 +3,11 @@
 # Declare variables to be passed into your templates.
 replicaCount: 1
 image:
+  repository: publicintegrity/klaxon
+  tag: latest
   pullPolicy: IfNotPresent
 service:
-  name: ruby
+  name: klaxon
   type: ClusterIP
   externalPort: 80
   internalPort: 3000
@@ -17,7 +19,8 @@ resources:
     cpu: 100m
     memory: 128Mi
 ingress:
-  enabled: false
+  enabled: true
+basedomain: klaxon
 env:
   MAILER_FROM_ADDRESS: alerts@publicintegrity.org
   PORT: 3000

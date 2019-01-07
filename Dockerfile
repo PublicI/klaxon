@@ -13,5 +13,4 @@ RUN bundle install
 COPY . /usr/src/app
 
 EXPOSE 3000
-ENTRYPOINT ["/bin/sh"]
-# CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
+CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
