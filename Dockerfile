@@ -10,11 +10,11 @@ COPY Gemfile /usr/src/app/
 COPY Gemfile.lock /usr/src/app/
 RUN bundle install
 
-COPY . /usr/src/app
-
 ARG DATABASE_URL
 
 RUN RACK_ENV=production RAILS_ENV=production bundle exec rake assets:precompile assets:clean
+
+COPY . /usr/src/app
 
 EXPOSE 3000
 CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
