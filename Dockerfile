@@ -12,10 +12,7 @@ RUN bundle install
 
 COPY . /usr/src/app
 
-ENV RACK_ENV production
-ENV RAILS_ENV production
-
-RUN bundle exec rake assets:precompile assets:clean
+RUN RACK_ENV=production RAILS_ENV=production bundle exec rake assets:precompile assets:clean
 
 EXPOSE 3000
 CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
