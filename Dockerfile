@@ -12,6 +12,9 @@ RUN bundle install
 
 COPY . /usr/src/app
 
+ENV RACK_ENV production
+ENV RAILS_ENV production
+
 RUN bundle exec rake assets:precompile assets:clean
 
 EXPOSE 3000
