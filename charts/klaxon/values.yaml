@@ -30,3 +30,5 @@ env:
   SES_DOMAIN: publicintegrity.org
   SES_PORT: 2587
   SMTP_PROVIDER: SES
+nodeSelector:
+  cloud.google.com/gke-nodepool: default-pool
