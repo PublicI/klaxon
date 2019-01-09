@@ -20,7 +20,8 @@ pipeline:
     secrets: [ api_server, kubernetes_token, admin_emails, database_url, secret_key_base, ses_password, ses_username ]
     skip_tls_verify: true
     when:
-      branch: publici
+      event: deployment
+      environment: production
 
   slack:
     image: plugins/slack
