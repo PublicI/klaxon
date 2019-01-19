@@ -8,6 +8,7 @@ WORKDIR /usr/src/app
 
 COPY Gemfile /usr/src/app/
 COPY Gemfile.lock /usr/src/app/
+RUN apk add --update ruby-dev build-base
 RUN bundle install
 
 COPY . /usr/src/app
