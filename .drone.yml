@@ -1,3 +1,9 @@
+services:
+  database:
+    image: postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=test
 
 pipeline:
   build:
@@ -7,7 +13,8 @@ pipeline:
     tags: 
       - ${DRONE_COMMIT_SHA:0:12}
       - latest
-    secrets: [ database_url ]
+    environment:
+      DATABASE_URL: postgres://postgres@database/test
     build_args_from_env: [ DATABASE_URL ]
     when:
       event: [push,tag]
