@@ -20,7 +20,7 @@ pipeline:
       event: [push,tag]
       branch: publici
 
-  helm_push:
+  helm_dry_run:
     image: publicintegrity/drone-helm
     chart: ./charts/klaxon
     release: klaxon
