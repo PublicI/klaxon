@@ -6,6 +6,16 @@ services:
       - POSTGRES_DB=test
 
 pipeline:
+  assets_precompile:
+    image: ruby:2.4.5
+    environment:
+      DATABASE_URL: postgres://postgres@database/test
+      RACK_ENV: production
+      RAILS_ENV: production
+    commands:
+      - bundle install
+      - bundle exec rake assets:precompile assets:clean
+
   build:
     image: plugins/docker
     secrets: [ docker_username, docker_password ]
@@ -13,9 +23,6 @@ pipeline:
     tags: 
       - ${DRONE_COMMIT_SHA:0:12}
       - latest
-    environment:
-      DATABASE_URL: postgres://postgres@database/test
-    build_args_from_env: [ DATABASE_URL ]
     when:
       event: [push,tag]
       branch: publici
