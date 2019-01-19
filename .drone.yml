@@ -37,7 +37,9 @@ pipeline:
     image: publicintegrity/drone-helm
     chart: ./charts/klaxon
     release: klaxon
-    values: image.repository=publicintegrity/klaxon,image.tag=$${DRONE_COMMIT_SHA:0:12},admin_emails=$${ADMIN_EMAILS},database_url=$${DATABASE_URL},secret_key_base=$${SECRET_KEY_BASE},ses_password=$${SES_PASSWORD},ses_username=$${SES_USERNAME}
+    environment:
+      - IMAGE_TAG=${DRONE_COMMIT_SHA:0:12}
+    values: image.repository=publicintegrity/klaxon,image.tag=$${IMAGE_TAG},admin_emails=$${ADMIN_EMAILS},database_url=$${DATABASE_URL},secret_key_base=$${SECRET_KEY_BASE},ses_password=$${SES_PASSWORD},ses_username=$${SES_USERNAME}
     prefix:
     dry_run: true
     namespace: klaxon
@@ -51,7 +53,9 @@ pipeline:
     image: publicintegrity/drone-helm
     chart: ./charts/klaxon
     release: klaxon
-    values: image.repository=publicintegrity/klaxon,image.tag=$${DRONE_COMMIT_SHA:0:12},admin_emails=$${ADMIN_EMAILS},database_url=$${DATABASE_URL},secret_key_base=$${SECRET_KEY_BASE},ses_password=$${SES_PASSWORD},ses_username=$${SES_USERNAME}
+    environment:
+      - IMAGE_TAG=${DRONE_COMMIT_SHA:0:12}
+    values: image.repository=publicintegrity/klaxon,image.tag=$${IMAGE_TAG},admin_emails=$${ADMIN_EMAILS},database_url=$${DATABASE_URL},secret_key_base=$${SECRET_KEY_BASE},ses_password=$${SES_PASSWORD},ses_username=$${SES_USERNAME}
     prefix:
     namespace: klaxon
     secrets: [ api_server, kubernetes_token, admin_emails, database_url, secret_key_base, ses_password, ses_username ]
