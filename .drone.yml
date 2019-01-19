@@ -4,6 +4,9 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_DB=test
+    when:
+      event: [tag,push]
+      branch: publici
 
 pipeline:
   assets_precompile:
@@ -15,6 +18,9 @@ pipeline:
     commands:
       - bundle install
       - bundle exec rake assets:precompile assets:clean
+    when:
+      event: [tag,push]
+      branch: publici
 
   build:
     image: plugins/docker
