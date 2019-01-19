@@ -4,18 +4,34 @@ pipeline:
     image: plugins/docker
     secrets: [ docker_username, docker_password ]
     repo: publicintegrity/klaxon
-    tags: latest
+    tags: 
+      - ${DRONE_COMMIT_SHA:0:12}
+      - latest
     secrets: [ database_url ]
     build_args_from_env: [ DATABASE_URL ]
     when:
-      event: [push, tag]
+      event: [push,tag]
+      branch: publici
+
+  helm_push:
+    image: publicintegrity/drone-helm
+    chart: ./charts/klaxon
+    release: klaxon
+    values: image.repository=publicintegrity/klaxon,image.tag=$${DRONE_COMMIT_SHA:0:12},admin_emails=$${ADMIN_EMAILS},database_url=$${DATABASE_URL},secret_key_base=$${SECRET_KEY_BASE},ses_password=$${SES_PASSWORD},ses_username=$${SES_USERNAME}
+    prefix:
+    dry_run: true
+    namespace: klaxon
+    secrets: [ api_server, kubernetes_token, admin_emails, database_url, secret_key_base, ses_password, ses_username ]
+    skip_tls_verify: true
+    when:
+      event: [tag,push]
       branch: publici
 
   helm_deploy:
-    image: peloton/drone-helm
+    image: publicintegrity/drone-helm
     chart: ./charts/klaxon
     release: klaxon
-    values: image.repository=publicintegrity/klaxon,image.tag=latest,admin_emails=$${ADMIN_EMAILS},database_url=$${DATABASE_URL},secret_key_base=$${SECRET_KEY_BASE},ses_password=$${SES_PASSWORD},ses_username=$${SES_USERNAME}
+    values: image.repository=publicintegrity/klaxon,image.tag=$${DRONE_COMMIT_SHA:0:12},admin_emails=$${ADMIN_EMAILS},database_url=$${DATABASE_URL},secret_key_base=$${SECRET_KEY_BASE},ses_password=$${SES_PASSWORD},ses_username=$${SES_USERNAME}
     prefix:
     namespace: klaxon
     secrets: [ api_server, kubernetes_token, admin_emails, database_url, secret_key_base, ses_password, ses_username ]
